@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BachecaActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".Bacheca" />
+        <activity android:name=".DettUtente" />
+        <activity android:name=".Profilo" />
+        <activity android:name=".AggAmici" />
+        <activity android:name=".CreaPost"></activity>
     </application>
 
 </manifest>
