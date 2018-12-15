@@ -23,7 +23,11 @@
         <activity android:name=".DettUtente" />
         <activity android:name=".Profilo" />
         <activity android:name=".AggAmici" />
-        <activity android:name=".CreaPost"></activity>
+        <activity android:name=".CreaPost" />
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
