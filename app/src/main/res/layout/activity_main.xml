@@ -66,7 +66,7 @@
         app:layout_constraintVertical_bias="0.31" />
 
     <Button
-        android:id="@+id/bacheca"
+        android:id="@+id/vaibacheca"
         android:layout_width="82dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -76,7 +76,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="6dp"
         android:text="vai alla bacheca"
-        android:onClick="Bacheca"
+        android:onClick="VaiallaBacheca"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.891"

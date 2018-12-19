@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.view.View;
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button buttonServer=findViewById(R.id.NameSearchOnServer);
+
+       /*Button buttonServer=findViewById(R.id.NameSearchOnServer);
         buttonServer.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 EditText edit = (EditText)findViewById(R.id.password);
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 //queue = Volley.newRequestQueue(ctx);
                 getJsonResponsePost();
             }
-        });
+        });*/
     }
 
 
@@ -73,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
+    }
+
+    public void VaiallaBacheca(View view){
+        Intent intent= new Intent(MainActivity.this,Bacheca.class );
+        startActivity(intent);
+        Log.d("button", "l'intent funziona");
     }
 
 }

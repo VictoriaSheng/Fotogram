@@ -4,14 +4,18 @@
 
     <item
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/nav_home" />
+        android:title="@string/nav_home"
+        android:id="@+id/nav_bacheca"/>
     <item
         android:icon="@drawable/ic_add_black_24dp"
-        android:title="@string/nav_post" />
+        android:title="@string/nav_post"
+        android:id="@+id/nav_post"/>
     <item
         android:icon="@drawable/ic_person_black_24dp"
-        android:title="@string/nav_profilo" />
+        android:title="@string/nav_profilo"
+        android:id="@+id/nav_prof"/>
     <item
         android:icon="@drawable/ic_person_add_black_24dp"
-        android:title="@string/nav_addFriends" />
+        android:title="@string/nav_addFriends"
+        android:id="@+id/nav_aggiungi"/>
 </menu>
