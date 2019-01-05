@@ -1,23 +1,14 @@
 package com.example.victoriasheng.fotogram;
 
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-
-import java.lang.reflect.Field;
 
 public class Bacheca extends AppCompatActivity {
     //variabili private che identificano le parti della bacheca:navigation-bottom e parte superiore
@@ -37,14 +28,15 @@ public class Bacheca extends AppCompatActivity {
         setSupportActionBar(toolbar);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.main_nav);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
         builder.setTitle("TEST")
                 .setMessage(ActivityForVar.getSessionId())
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .show();
+                .show();*/
+
 
         //parte dello switch per i fragments
         //inizializzo le variabili per frame e navigation
@@ -56,6 +48,7 @@ public class Bacheca extends AppCompatActivity {
         profiloFragment=new ProfiloFragment();
         postFragment= new PostFragment();
         aggiungiFragment=new AggiungiFragment();
+        setFragment(bachecaFragment);
 
         //implementazione dei tasti
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

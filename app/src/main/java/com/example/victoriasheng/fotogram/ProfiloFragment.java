@@ -1,13 +1,17 @@
 package com.example.victoriasheng.fotogram;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -42,41 +47,49 @@ public class ProfiloFragment extends Fragment {
     }
 
     public void  getDataForPage(){
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/profile";
-        Map<String, String>  params = new HashMap<String, String>();
-        params.put("username", ActivityForVar.getUsername());
-        params.put("session_id", ActivityForVar.getSessionId());
-        JSONObject parameters = new JSONObject(params);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters,
-                new Response.Listener<JSONObject>() {
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String username = response.getString("username");
-                            String picture = response.getString("picture");
-                            TextView myAwesomeTextView = (TextView) getView().findViewById(R.id.user);
-                            myAwesomeTextView.setText(username);
-                            byte[] decodedString = Base64.decode(picture, Base64.DEFAULT);
-                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                            ImageView image = (ImageView) getView().findViewById(R.id.imageView);
-                            image.setImageBitmap(decodedByte);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
+                    public void onResponse(String response) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+                        builder.setTitle("test")
+                                .setMessage(response)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .show();
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+                        builder.setTitle("Error on login")
+                                .setMessage(error.toString())
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .show();
+                    }
+                }
+        ) {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("username", ActivityForVar.getUsername());
+                params.put("session_id", ActivityForVar.getSessionId());
 
-
-
+                return params;
             }
-        });
-        jsonObjectRequest.setShouldCache(false);
-        queue.add(jsonObjectRequest);
+        };
+        queue.add(postRequest);
     }
 
 }
