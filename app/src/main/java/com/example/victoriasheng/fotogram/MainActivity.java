@@ -21,6 +21,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    String userforset = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         ActivityForVar.setSessionId(response);
+                        ActivityForVar.setUsername(userforset);
                         startActivity(new Intent(MainActivity.this, Bacheca.class));
                     }
                 },
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 String password = edit.getText().toString();
                 EditText edit2 = (EditText)findViewById(R.id.nome);
                 String username = edit2.getText().toString();
+                userforset = username;
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("username", username);
                 params.put("password", password);
