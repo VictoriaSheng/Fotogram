@@ -48,4 +48,10 @@
         android:layout_marginLeft="200dp"
         android:text="Username" />
 
+    <ListView
+        android:id="@+id/postlistview"
+        android:layout_width="match_parent"
+        android:layout_height="418dp"
+        android:layout_marginTop="150dp" />
+
 </FrameLayout>

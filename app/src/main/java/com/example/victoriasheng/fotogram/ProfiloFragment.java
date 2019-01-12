@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,10 +24,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -54,14 +58,38 @@ public class ProfiloFragment extends Fragment {
                 {
                     @Override
                     public void onResponse(String response) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+                        /*AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
                         builder.setTitle("test")
                                 .setMessage(response)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
                                 })
-                                .show();
+                                .show();*/
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            String username = jobj.getString("username");
+                            String immagine = jobj.getString("img");
+                            JSONArray jarpost = jobj.getJSONArray("posts");
+                            ArrayList<JSONObject> listpost = new ArrayList<JSONObject>();
+                            if (jarpost != null) {
+                                for (int i=0;i<jarpost.length();i++){
+                                    listpost.add((JSONObject) jarpost.get(i));
+                                }
+                            }
+                            TextView myAwesomeTextView = (TextView) getView().findViewById(R.id.user);
+                            myAwesomeTextView.setText(username);
+                            byte[] decodedString = Base64.decode(immagine, Base64.DEFAULT);
+                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            ImageView image = (ImageView) getView().findViewById(R.id.imageView);
+                            image.setImageBitmap(decodedByte);
+                            ListView lipost = (ListView) getView().findViewById(R.id.postlistview);
+                            PostListAdapter postlistAdapter = new PostListAdapter(this, R.layout.student_list_element, listpost);
+                            lipost.setAdapter(postlistAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener()
