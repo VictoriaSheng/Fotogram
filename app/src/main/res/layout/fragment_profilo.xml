@@ -19,11 +19,12 @@
         tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLogout"
         android:layout_width="108dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="80dp"
+        android:onClick="onClick"
         android:text="Logout" />
 
     <TextView
@@ -53,5 +54,12 @@
         android:layout_width="match_parent"
         android:layout_height="418dp"
         android:layout_marginTop="150dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_marginTop="50dp"
+        android:text="TextView" />
 
 </FrameLayout>

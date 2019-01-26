@@ -1,16 +1,28 @@
 package com.example.victoriasheng.fotogram;
-
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
-public class Bacheca extends AppCompatActivity {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Bacheca extends AppCompatActivity implements View.OnClickListener {
     //variabili private che identificano le parti della bacheca:navigation-bottom e parte superiore
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
@@ -94,4 +106,40 @@ public class Bacheca extends AppCompatActivity {
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnLogout: logout();
+                break;
+        }
+    }
+
+    public void logout(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/logout";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Intent intent = new Intent(Bacheca.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               setFragment(bachecaFragment);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
 }
