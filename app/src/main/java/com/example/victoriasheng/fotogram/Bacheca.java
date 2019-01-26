@@ -1,5 +1,11 @@
 package com.example.victoriasheng.fotogram;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,9 +13,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,6 +28,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -112,9 +125,93 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btnLogout: logout();
                 break;
+            case R.id.selectImage: selectImage();
+                break;
         }
     }
-
+    public static final int PICK_IMAGE = 1;
+    String imgProfiloB64 = "";
+    public void selectImage(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            try {
+                InputStream is = this.getContentResolver().openInputStream(data.getData());
+                //byte[] decodedString = Base64.decode(immagine, Base64.DEFAULT);
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead;
+                byte[] databyte = new byte[16384];
+                while ((nRead = is.read(databyte, 0, databyte.length)) != -1) {
+                    buffer.write(databyte, 0, nRead);
+                }
+                byte[] decodedString = buffer.toByteArray();
+                imgProfiloB64 = Base64.encodeToString(decodedString, Base64.DEFAULT);
+                final Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                final AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+                LayoutInflater factory = LayoutInflater.from(this);
+                final View view = factory.inflate(R.layout.selectimage, null);
+                ImageView image = (ImageView) view.findViewById(R.id.select_image);
+                image.setImageBitmap(decodedByte);
+                alertadd.setView(view);
+                alertadd.setPositiveButton("SALVA",new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ImageView image = findViewById(R.id.imageView);
+                        image.setImageBitmap(decodedByte);
+                        uploadImage();
+                    }
+                });
+                alertadd.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertadd.show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void uploadImage(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/picture_update";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
+                        myAwesomeTextView.setText("OK" + response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
+                myAwesomeTextView.setText("ERROR" + error);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+                params.put("picture",imgProfiloB64);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
     public void logout(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/logout";
