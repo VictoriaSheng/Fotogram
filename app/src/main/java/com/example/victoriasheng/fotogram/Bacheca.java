@@ -14,9 +14,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -125,21 +127,58 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btnLogout: logout();
                 break;
-            case R.id.selectImage: selectImage();
+            case R.id.selectImage: selectImage("profilo");
                 break;
+            case R.id.postImage : selectImage("post");
+                break;
+            case R.id.salvaPost: salvaPost();
+
         }
+    }
+    public void salvaPost(){
+        Log.d("MYLOG","aaaaa");
+        EditText edit = (EditText)findViewById(R.id.postMsg);
+        final String msgparam = edit.getText().toString();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/create_post";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        setFragment(profiloFragment);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+                params.put("img",imgPostB64);
+                params.put("message",msgparam);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+
     }
     public static final int PICK_IMAGE = 1;
     String imgProfiloB64 = "";
-    public void selectImage(){
+    String imgPostB64 = "";
+    String tipoImageSelect = "";
+    public void selectImage(String tipo){
+        tipoImageSelect = tipo;
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             if (data == null) {
                 return;
@@ -154,29 +193,37 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                     buffer.write(databyte, 0, nRead);
                 }
                 byte[] decodedString = buffer.toByteArray();
-                imgProfiloB64 = Base64.encodeToString(decodedString, Base64.DEFAULT);
-                final Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                final AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
-                LayoutInflater factory = LayoutInflater.from(this);
-                final View view = factory.inflate(R.layout.selectimage, null);
-                ImageView image = (ImageView) view.findViewById(R.id.select_image);
-                image.setImageBitmap(decodedByte);
-                alertadd.setView(view);
-                alertadd.setPositiveButton("SALVA",new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ImageView image = findViewById(R.id.imageView);
-                        image.setImageBitmap(decodedByte);
-                        uploadImage();
-                    }
-                });
-                alertadd.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                alertadd.show();
+
+                if(tipoImageSelect.equals("profilo")) {
+                    imgProfiloB64 = Base64.encodeToString(decodedString, Base64.DEFAULT);
+                    final Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    final AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+                    LayoutInflater factory = LayoutInflater.from(this);
+                    final View view = factory.inflate(R.layout.selectimage, null);
+                    ImageView image = (ImageView) view.findViewById(R.id.select_image);
+                    image.setImageBitmap(decodedByte);
+                    alertadd.setView(view);
+                    alertadd.setPositiveButton("SALVA", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ImageView image = findViewById(R.id.imageView);
+                            image.setImageBitmap(decodedByte);
+                            uploadImage();
+                        }
+                    });
+                    alertadd.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertadd.show();
+                }else if(tipoImageSelect.equals("post")) {
+                    imgPostB64 = Base64.encodeToString(decodedString, Base64.DEFAULT);
+                    final Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    ImageView image = (ImageView) findViewById(R.id.postImage);
+                    image.setImageBitmap(decodedByte);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
