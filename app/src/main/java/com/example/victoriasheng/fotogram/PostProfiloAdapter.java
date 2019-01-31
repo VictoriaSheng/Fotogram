@@ -27,6 +27,7 @@ public class PostProfiloAdapter extends ArrayAdapter<JSONObject> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
+        String data="";
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
@@ -40,7 +41,10 @@ public class PostProfiloAdapter extends ArrayAdapter<JSONObject> {
             Log.d("myTap", "valore di p: "+p);
             try {
                 testoPost.setText(p.getString("msg"));
-                dataPost.setText(p.getString("timestamp"));
+                data=p.getString("timestamp");
+                data=data.substring(0,10);
+                dataPost.setText(data); //bisogna limitarsi alla data, questo metodo mi rallenta un pò tutto
+                //per l'ordinamento dei post per data di creazione si usa qualcosa?
                 byte[] decodedString = Base64.decode(p.getString("img"), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 ImageView image = (ImageView) v.findViewById(R.id.immagine);
