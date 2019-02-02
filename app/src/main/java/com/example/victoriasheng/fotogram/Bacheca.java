@@ -166,6 +166,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
         queue.add(stringRequest);
 
     }
+
     public static final int PICK_IMAGE = 1;
     String imgProfiloB64 = "";
     String imgPostB64 = "";

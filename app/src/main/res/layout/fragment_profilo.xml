@@ -26,6 +26,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="profilo"
+
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,6 +65,7 @@
             </android.support.v7.widget.CardView>
 
             <Button
+                android:fontFamily="@font/tcm"
                 android:id="@+id/btnLogout"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
@@ -80,7 +82,7 @@
                 app:layout_constraintHorizontal_bias="0.97"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.215" />
+                app:layout_constraintVertical_bias="0.19" />
 
             <TextView
                 android:id="@+id/textView"
@@ -104,13 +106,14 @@
                 android:layout_width="104dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="Username"
                 android:textAlignment="center"
                 android:textColor="#3b3b3b"
-                android:textSize="15sp"
+                android:fontFamily="@font/tcm"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,19 +123,18 @@
             <ListView
                 android:id="@+id/postlistview"
                 android:layout_width="match_parent"
-                android:layout_height="354dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="374dp"
                 android:background="@color/colorWhite"
-                android:dividerHeight="8dp"
+                android:dividerHeight="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/selectImage" />
+                app:layout_constraintTop_toBottomOf="@+id/selectImage"
+                app:layout_constraintVertical_bias="1.0" />
 
             <Button
+                android:fontFamily="@font/tcm"
                 android:id="@+id/selectImage"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
@@ -149,16 +151,16 @@
                 app:layout_constraintHorizontal_bias="0.03"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.215" />
+                app:layout_constraintVertical_bias="0.19" />
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="wrap_content"
-                android:layout_height="5dp"
+                android:layout_height="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:background="?android:attr/listDivider"
                 android:backgroundTint="@color/colorButtonBlue"
                 app:layout_constraintBottom_toTopOf="@+id/postlistview"
@@ -166,6 +168,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
+
 
         </android.support.constraint.ConstraintLayout>
 
