@@ -2,6 +2,7 @@ package com.example.victoriasheng.fotogram;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -46,6 +47,10 @@ public class BachecaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if(!ActivityForVar.isLogged()){
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            startActivity(intent);
+        }
         getDataForPage();
         return inflater.inflate(R.layout.fragment_bacheca, container, false);
     }

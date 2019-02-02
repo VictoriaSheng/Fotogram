@@ -1,6 +1,7 @@
 package com.example.victoriasheng.fotogram;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +23,10 @@ public class PostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if(!ActivityForVar.isLogged()){
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            startActivity(intent);
+        }
         return inflater.inflate(R.layout.fragment_post, container, false);
     }
 

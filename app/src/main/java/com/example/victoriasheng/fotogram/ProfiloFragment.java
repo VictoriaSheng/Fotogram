@@ -47,6 +47,18 @@ public class ProfiloFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+        builder.setTitle("")
+                .setMessage(ActivityForVar.getSessionId())
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+        if(!ActivityForVar.isLogged()){
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            startActivity(intent);
+        }
         getDataForPage();
         return inflater.inflate(R.layout.fragment_profilo, container, false);
     }

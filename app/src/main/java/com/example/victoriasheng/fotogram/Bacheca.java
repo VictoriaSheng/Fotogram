@@ -51,6 +51,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bacheca);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.main_nav);
@@ -132,9 +133,67 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
             case R.id.postImage : selectImage("post");
                 break;
             case R.id.salvaPost: salvaPost();
+                break;
+            case R.id.segui: segui();
 
         }
     }
+
+    public void segui(){
+        TextView user = (TextView) findViewById(R.id.usernameUser);
+        final String username = user.getText().toString().trim();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/follow";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
+        builder.setTitle("")
+                .setMessage(response)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();*/
+                    //AGGIUNGERE INTENT A PROFILO UTENTE SEGUITO
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err = new String(error.networkResponse.data);
+                String msg = "";
+                if(err.startsWith("CANN")){
+                    msg = "Non puoi seguire te stesso";
+                }else if(err.startsWith("ALREADY")){
+                    msg= "Utente già seguito";
+                }else if(err.startsWith("USER")){
+                    msg = "Utente non trovato";
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
+                builder.setTitle("")
+                        .setMessage(msg)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+                params.put("username",username);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
     public void salvaPost(){
         Log.d("MYLOG","aaaaa");
         EditText edit = (EditText)findViewById(R.id.postMsg);
@@ -267,6 +326,8 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        ActivityForVar.setSessionId("");
+                        ActivityForVar.setUsername("");
                         Intent intent = new Intent(Bacheca.this, MainActivity.class);
                         startActivity(intent);
                     }
