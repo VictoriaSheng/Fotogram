@@ -6,6 +6,7 @@ import android.content.Intent;
 public class ActivityForVar{
     private static String sessionId = "";
     private static String username = "";
+    private static String userDett = "";
     public static void setSessionId(String param){
         sessionId = param;
     }
@@ -17,6 +18,12 @@ public class ActivityForVar{
     }
     public static String getUsername(){
         return username;
+    }
+    public static void setUserDett(String param){
+        userDett = param;
+    }
+    public static String getUserDett(){
+        return userDett;
     }
     public static boolean isLogged(){
         if(sessionId.equals("") || username.equals("")){

@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -89,7 +92,7 @@ public class AggiungiFragment extends Fragment {
                         Log.d("CIRFRA",response);
                         try {
                             JSONObject jobj = new JSONObject(response);
-                            JSONArray jarpost = jobj.getJSONArray("users");
+                            final JSONArray jarpost = jobj.getJSONArray("users");
                             ArrayList<JSONObject> arrayList = new ArrayList(jarpost.length());
                             for(int i=0;i < jarpost.length();i++){
                                 arrayList.add(jarpost.getJSONObject(i));
@@ -97,7 +100,24 @@ public class AggiungiFragment extends Fragment {
                             ListView posts = (ListView) getView().findViewById(R.id.listviewUser);
                             AggiungiAmiciAdapter adapter = new AggiungiAmiciAdapter(getContext(),android.R.layout.list_content, arrayList);
                             posts.setAdapter(adapter);
+                            posts.setOnItemClickListener(
+                                    new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                            Log.d("CIRFRA3","sono qui");
+                                            String c = "";
+                                            try {
+                                                JSONObject ja = jarpost.getJSONObject(i);
+                                                c = ja.getString("name");
+                                                Log.d("CIRFRA3", "c" + c);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
 
+                                            segui(c);
+                                        }
+                                    }
+                            );
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -191,4 +211,65 @@ public class AggiungiFragment extends Fragment {
     }
 
 
+    public void segui(String user){
+        Log.d("CIRFRA3",user);
+        final String userParam = user;
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/follow";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("CIRFRA2", ActivityForVar.getUserDett());
+                                            DettUtenteFragment fragment2 = new DettUtenteFragment();
+                                            FragmentManager fragmentManager = getFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.replace(R.id.main_frame, fragment2);
+                                            fragmentTransaction.commit();
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
+        builder.setTitle("")
+                .setMessage(response)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();*/
+                        //AGGIUNGERE INTENT A PROFILO UTENTE SEGUITO
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err = new String(error.networkResponse.data);
+                String msg = "";
+                if(err.startsWith("CANN")){
+                    msg = "Non puoi seguire te stesso";
+                }else if(err.startsWith("ALREADY")){
+                    msg= "Utente già seguito";
+                }else if(err.startsWith("USER")){
+                    msg = "Utente non trovato";
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+                builder.setTitle("")
+                        .setMessage(msg)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+                params.put("username",userParam);
+                Log.d("CIRFRA3", userParam);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
 }

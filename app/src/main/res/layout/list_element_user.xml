@@ -22,12 +22,5 @@
         tools:layout_editor_absoluteX="205dp"
         tools:layout_editor_absoluteY="51dp" />
 
-    <Button
-        android:id="@+id/segui"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Button"
-        tools:layout_editor_absoluteX="191dp"
-        tools:layout_editor_absoluteY="104dp" />
+
 </android.support.constraint.ConstraintLayout>

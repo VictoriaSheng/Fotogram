@@ -30,6 +30,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,6 +48,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
     private BachecaFragment bachecaFragment;
     private PostFragment postFragment;
     private AggiungiFragment aggiungiFragment;
+    private DettUtenteFragment dettUtenteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +137,8 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.salvaPost: salvaPost();
                 break;
-            case R.id.segui: segui();
-
+            //case R.id.segui: segui();
+              //  break;
         }
     }
 
