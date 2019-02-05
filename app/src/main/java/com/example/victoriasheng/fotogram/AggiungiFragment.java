@@ -78,6 +78,16 @@ public class AggiungiFragment extends Fragment {
         EditText tv_filter = (EditText) V.findViewById(R.id.cercaAmici);
         tv_filter.addTextChangedListener(fieldValidatorTextWatcher);
 
+        tv_filter.setOnFocusChangeListener( new View.OnFocusChangeListener(){
+
+            public void onFocusChange( View view, boolean hasfocus){
+                if(hasfocus){
+                    view.setBackgroundResource( R.drawable.focus_border);
+                }
+
+            }
+        });
+
         return V;
     }
 

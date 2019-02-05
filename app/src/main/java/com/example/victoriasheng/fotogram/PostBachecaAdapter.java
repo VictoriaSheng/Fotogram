@@ -27,6 +27,7 @@ public class PostBachecaAdapter extends ArrayAdapter<JSONObject> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
+        String dataT="";
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
@@ -41,7 +42,10 @@ public class PostBachecaAdapter extends ArrayAdapter<JSONObject> {
             Log.d("myTap", "valore di p: "+p);
             try {
                 testoPost.setText(p.getString("msg"));
-                dataPost.setText(p.getString("timestamp"));
+               // dataPost.setText(p.getString("timestamp"));
+                dataT=p.getString("timestamp");
+                dataT=dataT.substring(0, 10);
+                dataPost.setText(dataT);
                 userPost.setText(p.getString("user"));
                 byte[] decodedString = Base64.decode(p.getString("img"), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
