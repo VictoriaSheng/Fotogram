@@ -125,8 +125,12 @@ public class AggiungiFragment extends Fragment {
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
-
-                                            segui(c);
+                                            ActivityForVar.setUserDett(c);
+                                            DettUtenteFragment fragment2 = new DettUtenteFragment();
+                                            FragmentManager fragmentManager = getFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.replace(R.id.main_frame, fragment2);
+                                            fragmentTransaction.commit();
                                         }
                                     }
                             );
@@ -222,66 +226,4 @@ public class AggiungiFragment extends Fragment {
         queue.add(postRequest);
     }
 
-
-    public void segui(String user){
-        Log.d("CIRFRA3",user);
-        final String userParam = user;
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/follow";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("CIRFRA2", ActivityForVar.getUserDett());
-                                            DettUtenteFragment fragment2 = new DettUtenteFragment();
-                                            FragmentManager fragmentManager = getFragmentManager();
-                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            fragmentTransaction.replace(R.id.main_frame, fragment2);
-                                            fragmentTransaction.commit();
-                    /*AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
-        builder.setTitle("")
-                .setMessage(response)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();*/
-                        //AGGIUNGERE INTENT A PROFILO UTENTE SEGUITO
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String err = new String(error.networkResponse.data);
-                String msg = "";
-                if(err.startsWith("CANN")){
-                    msg = "Non puoi seguire te stesso";
-                }else if(err.startsWith("ALREADY")){
-                    msg= "Utente già seguito";
-                }else if(err.startsWith("USER")){
-                    msg = "Utente non trovato";
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
-                builder.setTitle("")
-                        .setMessage(msg)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("session_id", ActivityForVar.getSessionId());
-                params.put("username",userParam);
-                Log.d("CIRFRA3", userParam);
-                return params;
-            }
-        };
-        queue.add(stringRequest);
-    }
 }

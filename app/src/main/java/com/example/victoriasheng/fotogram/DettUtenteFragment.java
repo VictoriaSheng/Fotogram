@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,6 +49,7 @@ public class DettUtenteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getDataForPage();
+        getButtonForPage();
         return inflater.inflate(R.layout.fragment_dett_utente, container, false);
     }
 
@@ -110,4 +113,65 @@ public class DettUtenteFragment extends Fragment {
         };
         queue.add(postRequest);
     }
+
+    public void  getButtonForPage(){
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/followed";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("CIRFRA6",response);
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            JSONArray jarpost = jobj.getJSONArray("followed");
+                            Button btnSegui = (Button) getView().findViewById(R.id.seguiOn);
+                            Button btnNotSegui = (Button) getView().findViewById(R.id.nonSeguire);
+                            for(int i=0;i < jarpost.length();i++){
+                                if(jarpost.getJSONObject(i).getString("name").equals(ActivityForVar.getUserDett())){
+                                    btnSegui.setEnabled(false);
+                                    btnNotSegui.setEnabled(true);
+                                    Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
+                                    break;
+                                }else{
+                                    btnNotSegui.setEnabled(false);
+                                    btnSegui.setEnabled(true);
+                                    Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("CIRFRA6",error.toString());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+                        builder.setTitle("Error on login")
+                                .setMessage(error.toString())
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+
+                return params;
+            }
+        };
+        queue.add(postRequest);
+    }
+
 }

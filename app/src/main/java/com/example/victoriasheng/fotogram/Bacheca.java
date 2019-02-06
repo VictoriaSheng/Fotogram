@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
@@ -79,6 +80,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
         profiloFragment=new ProfiloFragment();
         postFragment= new PostFragment();
         aggiungiFragment=new AggiungiFragment();
+        dettUtenteFragment=new DettUtenteFragment();
         setFragment(bachecaFragment);
 
         //implementazione dei tasti
@@ -137,14 +139,57 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.salvaPost: salvaPost();
                 break;
-            //case R.id.segui: segui();
-              //  break;
+            case R.id.seguiOn: segui();
+                break;
+            case R.id.nonSeguire: notSegui();
+                break;
         }
     }
 
+    public void notSegui(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/unfollow";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("CIRFRA2", ActivityForVar.getUserDett());
+                        setFragment(bachecaFragment);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err = new String(error.networkResponse.data);
+                String msg = "";
+                if(err.startsWith("YOU")){
+                    msg = "Non segui questo utente";
+                }else if(err.startsWith("USERNAME")){
+                    msg= "Utente non trovato";
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
+                builder.setTitle("")
+                        .setMessage(msg)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("session_id", ActivityForVar.getSessionId());
+                params.put("username",ActivityForVar.getUserDett());
+                Log.d("CIRFRA3", ActivityForVar.getUserDett());
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
     public void segui(){
-        TextView user = (TextView) findViewById(R.id.usernameUser);
-        final String username = user.getText().toString().trim();
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://ewserver.di.unimi.it/mobicomp/fotogram/follow";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -152,16 +197,8 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onResponse(String response) {
 
-                    /*AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
-        builder.setTitle("")
-                .setMessage(response)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();*/
-                    //AGGIUNGERE INTENT A PROFILO UTENTE SEGUITO
-
+                        Log.d("CIRFRA2", ActivityForVar.getUserDett());
+                        setFragment(bachecaFragment);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -190,7 +227,8 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
             {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("session_id", ActivityForVar.getSessionId());
-                params.put("username",username);
+                params.put("username",ActivityForVar.getUserDett());
+                Log.d("CIRFRA3", ActivityForVar.getUserDett());
                 return params;
             }
         };
