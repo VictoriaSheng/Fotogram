@@ -30,7 +30,7 @@
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".Bacheca"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
     </application>
 
 </manifest>

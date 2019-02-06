@@ -83,6 +83,8 @@ public class AggiungiFragment extends Fragment {
             public void onFocusChange( View view, boolean hasfocus){
                 if(hasfocus){
                     view.setBackgroundResource( R.drawable.focus_border);
+                }else{
+                    view.setBackgroundResource( R.drawable.border_edittext);
                 }
 
             }
@@ -154,7 +156,7 @@ public class AggiungiFragment extends Fragment {
                 Map<String, String>  params = new HashMap<String, String>();
                 //params.put("username", ActivityForVar.getUsername());
                 params.put("session_id", ActivityForVar.getSessionId());
-                params.put("limit", "10");
+                params.put("limit", "20");
                 params.put("usernamestart", "");
 
                 return params;
