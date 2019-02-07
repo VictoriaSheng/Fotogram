@@ -135,15 +135,17 @@ public class DettUtenteFragment extends Fragment {
                                     btnSegui.setEnabled(false);
                                     btnSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
                                     btnNotSegui.setEnabled(true);
-                                    btnNotSegui.setVisibility(View.VISIBLE);
+                                    btnNotSegui.getBackground().clearColorFilter();
+                                    //btnNotSegui.setVisibility(View.VISIBLE);
                                     Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
                                     break;
                                 }else{
                                     btnNotSegui.setEnabled(false);
-                                    btnNotSegui.setVisibility(View.INVISIBLE);
-                                    //btnNotSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
+                                    //btnNotSegui.setVisibility(View.INVISIBLE);
+                                    btnNotSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
                                     btnSegui.setEnabled(true);
-                                    btnSegui.setVisibility(View.VISIBLE);
+                                    btnSegui.getBackground().clearColorFilter();
+                                    //btnSegui.setVisibility(View.VISIBLE);
                                     Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
                                 }
                             }
