@@ -4,8 +4,10 @@ package com.example.victoriasheng.fotogram;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
@@ -131,12 +133,17 @@ public class DettUtenteFragment extends Fragment {
                             for(int i=0;i < jarpost.length();i++){
                                 if(jarpost.getJSONObject(i).getString("name").equals(ActivityForVar.getUserDett())){
                                     btnSegui.setEnabled(false);
+                                    btnSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
                                     btnNotSegui.setEnabled(true);
+                                    btnNotSegui.setVisibility(View.VISIBLE);
                                     Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
                                     break;
                                 }else{
                                     btnNotSegui.setEnabled(false);
+                                    btnNotSegui.setVisibility(View.INVISIBLE);
+                                    //btnNotSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
                                     btnSegui.setEnabled(true);
+                                    btnSegui.setVisibility(View.VISIBLE);
                                     Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
                                 }
                             }

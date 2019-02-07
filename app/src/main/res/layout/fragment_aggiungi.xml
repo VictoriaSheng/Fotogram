@@ -22,6 +22,7 @@
             android:background="@drawable/border_edit_aggiungi"
             android:ems="10"
             android:hint="Cerca"
+            android:textSize="22sp"
             android:inputType="textPersonName"
             android:nextFocusDown="@+id/NameSearchOnServer"
             android:textAlignment="center"

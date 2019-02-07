@@ -182,7 +182,7 @@ public class AggiungiFragment extends Fragment {
                         Log.d("CIRFRA",response);
                         try {
                             JSONObject jobj = new JSONObject(response);
-                            JSONArray jarpost = jobj.getJSONArray("users");
+                            final JSONArray jarpost = jobj.getJSONArray("users");
                             ArrayList<JSONObject> arrayList = new ArrayList(jarpost.length());
                             for(int i=0;i < jarpost.length();i++){
                                 arrayList.add(jarpost.getJSONObject(i));
@@ -190,6 +190,28 @@ public class AggiungiFragment extends Fragment {
                             ListView posts = (ListView) getView().findViewById(R.id.listviewUser);
                             AggiungiAmiciAdapter adapter = new AggiungiAmiciAdapter(getContext() ,android.R.layout.list_content, arrayList);
                             posts.setAdapter(adapter);
+                            posts.setOnItemClickListener(
+                                    new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                            Log.d("CIRFRA3","sono qui");
+                                            String c = "";
+                                            try {
+                                                JSONObject ja = jarpost.getJSONObject(i);
+                                                c = ja.getString("name");
+                                                Log.d("CIRFRA3", "c" + c);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            ActivityForVar.setUserDett(c);
+                                            DettUtenteFragment fragment2 = new DettUtenteFragment();
+                                            FragmentManager fragmentManager = getFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.replace(R.id.main_frame, fragment2);
+                                            fragmentTransaction.commit();
+                                        }
+                                    }
+                            );
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -217,7 +239,7 @@ public class AggiungiFragment extends Fragment {
                 Map<String, String>  params = new HashMap<String, String>();
                 //params.put("username", ActivityForVar.getUsername());
                 params.put("session_id", ActivityForVar.getSessionId());
-                params.put("limit", "10");
+                params.put("limit", "20");
                 params.put("usernamestart", cerca);
 
                 return params;
