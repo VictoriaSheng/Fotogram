@@ -72,14 +72,11 @@ public class AggiungiFragment extends Fragment {
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
         }
-
         getDataForPage();
         View V = inflater.inflate(R.layout.fragment_aggiungi, container, false);
         EditText tv_filter = (EditText) V.findViewById(R.id.cercaAmici);
         tv_filter.addTextChangedListener(fieldValidatorTextWatcher);
-
         tv_filter.setOnFocusChangeListener( new View.OnFocusChangeListener(){
-
             public void onFocusChange( View view, boolean hasfocus){
                 if(hasfocus){
                     view.setBackgroundResource( R.drawable.focus_border);
@@ -89,8 +86,14 @@ public class AggiungiFragment extends Fragment {
 
             }
         });
-
         return V;
+    }
+
+    @Override
+    public void onResume(){
+        EditText tv_filter = (EditText) getView().findViewById(R.id.cercaAmici);
+        tv_filter.setText("");
+        super.onResume();
     }
 
     public void  getDataForPage(){
