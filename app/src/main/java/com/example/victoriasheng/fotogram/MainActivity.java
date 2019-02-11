@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(ActivityForVar.getFromFile(MainActivity.this)){
+            startActivity(new Intent(MainActivity.this, Bacheca.class));
+        }
         setContentView(R.layout.activity_main);
         Button buttonServer=findViewById(R.id.NameSearchOnServer);
         buttonServer.setOnClickListener(new OnClickListener() {
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         ActivityForVar.setSessionId(response);
                         ActivityForVar.setUsername(userforset);
+                        ActivityForVar.saveToFile(MainActivity.this);
                         startActivity(new Intent(MainActivity.this, Bacheca.class));
                     }
                 },

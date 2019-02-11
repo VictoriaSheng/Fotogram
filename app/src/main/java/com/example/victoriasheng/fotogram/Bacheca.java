@@ -369,6 +369,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                     public void onResponse(String response) {
                         ActivityForVar.setSessionId("");
                         ActivityForVar.setUsername("");
+                        ActivityForVar.cancFromFile(Bacheca.this);
                         Intent intent = new Intent(Bacheca.this, MainActivity.class);
                         startActivity(intent);
                     }

@@ -24,6 +24,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/msgPost"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userPost"
             tools:srcCompat="@tools:sample/avatars" />
@@ -33,9 +34,9 @@
             android:layout_width="166dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/tcm"
             android:text="TextView"
             android:textColor="@color/colorButtonBlue"
@@ -43,14 +44,13 @@
             app:layout_constraintBottom_toTopOf="@+id/imagePost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/timestampPost"
             android:layout_width="134dp"
             android:layout_height="25dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
@@ -61,10 +61,8 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/imagePost"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/msgPost"
@@ -83,6 +81,22 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imagePost" />
+
+        <ImageView
+            android:id="@+id/imgUtentePostBacheca"
+            android:layout_width="107dp"
+            android:layout_height="92dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/imagePost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.207"
+            tools:srcCompat="@tools:sample/avatars" />
 
     </android.support.constraint.ConstraintLayout>
 
