@@ -339,14 +339,14 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
-                        myAwesomeTextView.setText("OK" + response);
+                       /* TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
+                        myAwesomeTextView.setText("OK" + response);*/
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
-                myAwesomeTextView.setText("ERROR" + error);
+               /* TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
+                myAwesomeTextView.setText("ERROR" + error);*/
             }
         }){
             @Override

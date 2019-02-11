@@ -1,4 +1,5 @@
 package com.example.victoriasheng.fotogram;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,14 +48,14 @@ public class ProfiloFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Dialog_NoActionBar);
         builder.setTitle("")
                 .setMessage(ActivityForVar.getSessionId())
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .show();
+                .show();*/
         if(!ActivityForVar.isLogged()){
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
