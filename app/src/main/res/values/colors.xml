@@ -5,6 +5,7 @@
     <color name="colorAccent">#a91d2671</color>
     <color name="colorMenu">#1b6ad8</color>
     <color name="colorButtonPurple">#C33764</color>
+    <color name="colorPurpleTrasparent">#71c33764</color>
     <color name="colorButtonBlue">#1D2671</color>
 
     <color name="colorWhite">#ffffff</color>
