@@ -89,7 +89,7 @@ public class BachecaFragment extends Fragment {
                                                 e.printStackTrace();
                                             }
                                             ActivityForVar.setUserDett(c);
-                                            Log.d("CIRFRA2", ActivityForVar.getUserDett());
+                                            Log.d("Fotogram", "Bacheca getUserDett " + ActivityForVar.getUserDett());
                                             DettUtenteFragment fragment2 = new DettUtenteFragment();
                                             FragmentManager fragmentManager = getFragmentManager();
                                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

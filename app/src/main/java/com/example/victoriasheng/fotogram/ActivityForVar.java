@@ -68,7 +68,7 @@ public class ActivityForVar{
         File directory = ctx.getFilesDir();
         File file = new File(directory, "Variabili2");
         if(file.exists()) {
-            Log.d("TESTTTTTT","esiste");
+            Log.d("Fotogram","File variabili esiste");
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String content = null;
@@ -102,7 +102,7 @@ public class ActivityForVar{
     }
 
     public static void cancFromFile(Context ctx){
-        Log.d("LOGOUT","logout");
+        Log.d("Fotogram","Delete frile credenziali per logout");
         File directory = ctx.getFilesDir();
         File file = new File(directory, "Variabili2");
         if(file.exists()){

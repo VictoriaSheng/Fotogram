@@ -124,7 +124,6 @@ public class DettUtenteFragment extends Fragment {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("CIRFRA6",response);
                         try {
                             JSONObject jobj = new JSONObject(response);
                             JSONArray jarpost = jobj.getJSONArray("followed");
@@ -136,17 +135,14 @@ public class DettUtenteFragment extends Fragment {
                                     btnSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
                                     btnNotSegui.setEnabled(true);
                                     btnNotSegui.getBackground().clearColorFilter();
-                                    //btnNotSegui.setVisibility(View.VISIBLE);
-                                    Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
+                                    Log.d("Fotogram","Set button seguito " + jarpost.getJSONObject(i).getString("name") + i);
                                     break;
                                 }else{
                                     btnNotSegui.setEnabled(false);
-                                    //btnNotSegui.setVisibility(View.INVISIBLE);
                                     btnNotSegui.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhiteTraparent), PorterDuff.Mode.MULTIPLY);
                                     btnSegui.setEnabled(true);
                                     btnSegui.getBackground().clearColorFilter();
-                                    //btnSegui.setVisibility(View.VISIBLE);
-                                    Log.d("CIRFRA6",jarpost.getJSONObject(i).getString("name") + i);
+                                    Log.d("Fotogram","Set button non seguito " + jarpost.getJSONObject(i).getString("name") + i);
                                 }
                             }
 

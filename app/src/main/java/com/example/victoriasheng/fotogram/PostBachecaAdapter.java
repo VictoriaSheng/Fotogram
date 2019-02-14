@@ -49,7 +49,6 @@ public class PostBachecaAdapter extends ArrayAdapter<JSONObject> {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.list_element_profilo, null);
-            Log.d("myTap", "l'adapter funziona");
         }
         JSONObject p = getItem(position);
         if (p != null) {
@@ -61,10 +60,8 @@ public class PostBachecaAdapter extends ArrayAdapter<JSONObject> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.d("myTap", "valore di p: "+p);
             try {
                 testoPost.setText(p.getString("msg"));
-               // dataPost.setText(p.getString("timestamp"));
                 dataT=p.getString("timestamp");
                 dataT=dataT.substring(0, 10);
                 dataPost.setText(dataT);

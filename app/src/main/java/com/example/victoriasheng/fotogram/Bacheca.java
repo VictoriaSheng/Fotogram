@@ -60,16 +60,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
         setSupportActionBar(toolbar);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.main_nav);
 
-        /*AlertDialog.Builder builder = new AlertDialog.Builder(Bacheca.this, android.R.style.Theme_Holo_Dialog_NoActionBar);
-        builder.setTitle("TEST")
-                .setMessage(ActivityForVar.getSessionId())
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();*/
-
-
         //parte dello switch per i fragments
         //inizializzo le variabili per frame e navigation
         mMainFrame=findViewById(R.id.main_frame);
@@ -108,18 +98,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 return false;
             }
         });
-
-
-
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
     }
 
     public void setFragment(Fragment fragment){
@@ -153,7 +131,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("CIRFRA2", ActivityForVar.getUserDett());
                         setFragment(bachecaFragment);
                     }
                 }, new Response.ErrorListener() {
@@ -182,7 +159,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("session_id", ActivityForVar.getSessionId());
                 params.put("username",ActivityForVar.getUserDett());
-                Log.d("CIRFRA3", ActivityForVar.getUserDett());
                 return params;
             }
         };
@@ -196,8 +172,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.d("CIRFRA2", ActivityForVar.getUserDett());
                         setFragment(bachecaFragment);
                     }
                 }, new Response.ErrorListener() {
@@ -228,7 +202,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("session_id", ActivityForVar.getSessionId());
                 params.put("username",ActivityForVar.getUserDett());
-                Log.d("CIRFRA3", ActivityForVar.getUserDett());
                 return params;
             }
         };
@@ -236,7 +209,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void salvaPost(){
-        Log.d("MYLOG","aaaaa");
         EditText edit = (EditText)findViewById(R.id.postMsg);
         final String msgparam = edit.getText().toString();
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -286,7 +258,6 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
             }
             try {
                 InputStream is = this.getContentResolver().openInputStream(data.getData());
-                //byte[] decodedString = Base64.decode(immagine, Base64.DEFAULT);
                 ByteArrayOutputStream buffer = new ByteArrayOutputStream();
                 int nRead;
                 byte[] databyte = new byte[16384];
@@ -339,14 +310,10 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       /* TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
-                        myAwesomeTextView.setText("OK" + response);*/
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               /* TextView myAwesomeTextView = (TextView) findViewById(R.id.textView);
-                myAwesomeTextView.setText("ERROR" + error);*/
             }
         }){
             @Override

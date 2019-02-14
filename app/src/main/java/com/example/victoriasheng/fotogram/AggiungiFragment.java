@@ -105,7 +105,6 @@ public class AggiungiFragment extends Fragment {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("CIRFRA",response);
                         try {
                             JSONObject jobj = new JSONObject(response);
                             final JSONArray jarpost = jobj.getJSONArray("users");
@@ -120,12 +119,11 @@ public class AggiungiFragment extends Fragment {
                                     new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            Log.d("CIRFRA3","sono qui");
                                             String c = "";
                                             try {
                                                 JSONObject ja = jarpost.getJSONObject(i);
                                                 c = ja.getString("name");
-                                                Log.d("CIRFRA3", "c" + c);
+                                                Log.d("Fotogram", "AggiungiFragment get element with name " + c);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -183,7 +181,6 @@ public class AggiungiFragment extends Fragment {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("CIRFRA",response);
                         try {
                             JSONObject jobj = new JSONObject(response);
                             final JSONArray jarpost = jobj.getJSONArray("users");
@@ -198,12 +195,11 @@ public class AggiungiFragment extends Fragment {
                                     new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            Log.d("CIRFRA3","sono qui");
                                             String c = "";
                                             try {
                                                 JSONObject ja = jarpost.getJSONObject(i);
                                                 c = ja.getString("name");
-                                                Log.d("CIRFRA3", "c" + c);
+                                                Log.d("Fotogram", "AggiungiFragment get element with name " + c);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -241,7 +237,6 @@ public class AggiungiFragment extends Fragment {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
-                //params.put("username", ActivityForVar.getUsername());
                 params.put("session_id", ActivityForVar.getSessionId());
                 params.put("limit", "20");
                 params.put("usernamestart", cerca);

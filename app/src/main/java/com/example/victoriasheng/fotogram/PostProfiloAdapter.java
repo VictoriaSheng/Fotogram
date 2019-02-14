@@ -32,19 +32,16 @@ public class PostProfiloAdapter extends ArrayAdapter<JSONObject> {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.list_element, null);
-            Log.d("myTap", "l'adapter funziona");
         }
         JSONObject p = getItem(position);
         if (p != null) {
             TextView testoPost = (TextView) v.findViewById(R.id.testo);
             TextView dataPost = (TextView) v.findViewById(R.id.timestamp);
-            Log.d("myTap", "valore di p: "+p);
             try {
                 testoPost.setText(p.getString("msg"));
                 data=p.getString("timestamp");
                 data=data.substring(0,10);
-                dataPost.setText(data); //bisogna limitarsi alla data, questo metodo mi rallenta un pò tutto
-                //per l'ordinamento dei post per data di creazione si usa qualcosa?
+                dataPost.setText(data);
                 byte[] decodedString = Base64.decode(p.getString("img"), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 ImageView image = (ImageView) v.findViewById(R.id.immagine);
