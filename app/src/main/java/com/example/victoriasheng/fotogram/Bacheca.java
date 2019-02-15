@@ -79,19 +79,19 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_bacheca:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        //mMainNav.setItemBackgroundResource(R.color.colorPrimary);
                         setFragment(bachecaFragment);
                         return true;
                     case R.id.nav_prof:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        //mMainNav.setItemBackgroundResource(R.color.colorPrimary);
                         setFragment(profiloFragment);
                         return true;
                     case R.id.nav_post:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        //mMainNav.setItemBackgroundResource(R.color.colorPrimary);
                         setFragment(postFragment);
                         return true;
                     case R.id.nav_aggiungi:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        //mMainNav.setItemBackgroundResource(R.color.colorPrimary);
                         setFragment(aggiungiFragment);
                         return true;
                 }
@@ -131,6 +131,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        mMainNav.setSelectedItemId(R.id.nav_bacheca);
                         setFragment(bachecaFragment);
                     }
                 }, new Response.ErrorListener() {
@@ -172,6 +173,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        mMainNav.setSelectedItemId(R.id.nav_bacheca);
                         setFragment(bachecaFragment);
                     }
                 }, new Response.ErrorListener() {
@@ -217,6 +219,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        mMainNav.setSelectedItemId(R.id.nav_prof);
                         setFragment(profiloFragment);
                     }
                 }, new Response.ErrorListener() {
@@ -343,6 +346,7 @@ public class Bacheca extends AppCompatActivity implements View.OnClickListener {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mMainNav.setSelectedItemId(R.id.nav_bacheca);
                setFragment(bachecaFragment);
             }
         }){
